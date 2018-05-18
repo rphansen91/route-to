@@ -1,0 +1,19 @@
+{
+  "name": "route-to",
+  "version": "0.0.0-alpha.1",
+  "description": "Fast and simple http router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rphansen91/route-to.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "url-pattern": "^1.0.3"
+  }
+}
