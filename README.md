@@ -9,12 +9,12 @@ Fast and simple http router.
 ```js
 const PORT = process.env.PORT || 3000;
 const http = require("http");
-const { combineRoutes, route } = require("route-to");
+const { combineRoutes, route, jsonParser } = require("route-to");
 
 const server = http.createServer(
   combineRoutes(
     route("/active", (req, res) => res.json({ active: true })),
-    route("/ready", (req, res) => res.json({ ready: true })),
+    route("/ready", (req, res) => res.json({ ready: true }))
   )
 );
 
@@ -54,10 +54,46 @@ route("/user", (req, res) => {
 })
 ```
 
-## Coming Soon
+## Middleware
 
-- Middleware
+* Handle Auth
+
+```js
+const { route } = require("route-to");
+
+function isLoggedIn (req, res, next) {
+  if (req.headers['X-Auth-Token']) {
+    next()
+  } else {
+    res.writeHead(500)
+    res.end()
+  }
+}
+
+route('/profile/:id', isLoggedIn, () => {
+  const { id } = req.query
+
+  findUser({ id, loggedIn: true })
+  .then(user => res.json({ user }))
+  .catch(err => res.json(({ error: err.message }))
+})
+```
+
+* JSON Parser
+
+```js
+const { route, jsonParser } = require("route-to");
+
+route("/user/update/:id", jsonParser, (req, res) => {
+  const { id } = req.params
+  const update = req.body
+
+  updateUser({ id }, update)
+  .then(user => res.json({ user }))
+  .catch(err => res.json(({ error: err.message }))
+})
+```
 
 ## Dependencies
 
-- [url-pattern](https://github.com/snd/url-pattern)
+* [url-pattern](https://github.com/snd/url-pattern)

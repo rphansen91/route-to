@@ -1,8 +1,15 @@
 const UrlPattern = require("url-pattern");
 
-function route(matcher, fn) {
+function route(matcher, ...fns) {
   const isMatch = routeMatcher(matcher);
-  const handleRequest = (req, res) => fn(req, res);
+  const handleRequest = (req, res) => {
+    fns.reduceRight(
+      (acc, fn) => {
+        return () => fn(req, res, acc);
+      },
+      () => {}
+    )();
+  };
   return { isMatch, handleRequest };
 }
 
