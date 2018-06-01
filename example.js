@@ -1,6 +1,6 @@
 const http = require("http");
 const { combineRoutes, route, jsonParser } = require("./");
-const port = 3000;
+const port = 3003;
 
 const server = http.createServer(
   combineRoutes(
@@ -30,6 +30,7 @@ let mockUser = {
 
 function findUser(req, res) {
   const { id } = req.params;
+  mockUser.id = id;
   return Promise.resolve(mockUser)
     .then(result => res.json(result))
     .catch(({ message: error }) => res.json({ error }));
@@ -38,6 +39,7 @@ function findUser(req, res) {
 function updateUser(req, res) {
   const { id } = req.params;
   const update = req.body;
+  mockUser.id = id;
   return Promise.resolve(Object.assign(mockUser, update))
     .then(result => res.json(result))
     .catch(({ message: error }) => res.json({ error }));
