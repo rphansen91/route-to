@@ -1,13 +1,23 @@
 const http = require("http");
-const { combineRoutes, route, jsonParser } = require("./");
+const {
+  combineRoutes,
+  middleware,
+  route,
+  setBasePath,
+  jsonParser
+} = require("./");
 const port = 3003;
+const base = "/base";
 
 const server = http.createServer(
-  combineRoutes(
-    route("/", jsonParser, sendJson),
-    route("/user/find/:id", findUser),
-    route("/user/update/:id", jsonParser, updateUser),
-    route("/profile/:id", isLoggedIn, findUser)
+  middleware(
+    setBasePath(base),
+    combineRoutes(
+      route("/", jsonParser, sendJson),
+      route("/user/find/:id", findUser),
+      route("/user/update/:id", jsonParser, updateUser),
+      route("/profile/:id", isLoggedIn, findUser)
+    )
   )
 );
 

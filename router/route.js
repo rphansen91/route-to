@@ -1,15 +1,9 @@
 const UrlPattern = require("url-pattern");
+const middleware = require("./middleware");
 
 function route(matcher, ...fns) {
   const isMatch = routeMatcher(matcher);
-  const handleRequest = (req, res) => {
-    fns.reduceRight(
-      (acc, fn) => {
-        return () => fn(req, res, acc);
-      },
-      () => {}
-    )();
-  };
+  const handleRequest = middleware(...fns);
   return { isMatch, handleRequest };
 }
 
