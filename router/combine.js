@@ -19,9 +19,9 @@ module.exports = function combineRoutes(...routes) {
     res.json = sendJson(res);
 
     for (let i = 0; i < activeRoutes.length; i++) {
-      const { isMatch, handleRequest } = activeRoutes[i];
+      const { isMatch, isMethod, handleRequest } = activeRoutes[i];
       const params = isMatch(url);
-      if (params) {
+      if (params && isMethod(req)) {
         req.params = params;
         handleRequest(req, res);
         break;

@@ -1,6 +1,6 @@
 {
   "name": "route-to",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "description": "Fast and simple http router",
   "main": "index.js",
   "scripts": {

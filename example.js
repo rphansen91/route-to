@@ -13,16 +13,16 @@ const server = http.createServer(
   middleware(
     setBasePath(base),
     combineRoutes(
-      route("/", jsonParser, sendJson),
-      route("/user/find/:id", findUser),
-      route("/user/update/:id", jsonParser, updateUser),
-      route("/profile/:id", isLoggedIn, findUser)
+      route.get("/", sendJson),
+      route.get("/user/find/:id", findUser),
+      route.get("/profile/:id", isLoggedIn, findUser),
+      route.post("/user/update/:id", jsonParser, updateUser)
     )
   )
 );
 
 function sendJson(req, res) {
-  res.json(req.body);
+  res.json({ hello: "JSON" });
 }
 
 function isLoggedIn(req, res, next) {
@@ -30,7 +30,7 @@ function isLoggedIn(req, res, next) {
     next();
   } else {
     res.writeHead(500);
-    res.end();
+    res.end("Not logged in");
   }
 }
 
