@@ -4,6 +4,7 @@ const buildRequest = (event, context, callback) => {
   const request = new EventEmitter();
   request.url = event.path || "";
   request.query = event.queryStringParameters || {};
+  request.method = event.method;
   return request;
 };
 

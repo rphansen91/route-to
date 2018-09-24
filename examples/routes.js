@@ -1,32 +1,12 @@
-const http = require("http");
-const {
-  combineRoutes,
-  middleware,
-  route,
-  setBasePath,
-  jsonParser
-} = require("./");
-const port = 3003;
-const base = "/base";
-
-const server = http.createServer(
-  middleware(
-    setBasePath(base),
-    combineRoutes(
-      route.get("/", sendJson),
-      route.get("/user/find/:id", findUser),
-      route.get("/profile/:id", isLoggedIn, findUser),
-      route.post("/user/update/:id", jsonParser, updateUser)
-    )
-  )
-);
+const { combineRoutes, route, jsonParser } = require("../");
 
 function sendJson(req, res) {
   res.json({ hello: "JSON" });
 }
 
 function isLoggedIn(req, res, next) {
-  if (req.headers["X-Auth-Token"]) {
+  console.log(req.headers);
+  if (req.headers["x-auth-token"]) {
     next();
   } else {
     res.writeHead(500);
@@ -55,4 +35,9 @@ function updateUser(req, res) {
     .catch(({ message: error }) => res.json({ error }));
 }
 
-server.listen(port, () => console.log(`http://localhost:${port}`));
+module.exports = combineRoutes(
+  route.get("/", sendJson),
+  route.get("/user/find/:id", findUser),
+  route.get("/profile/:id", isLoggedIn, findUser),
+  route.post("/user/update/:id", jsonParser, updateUser)
+);

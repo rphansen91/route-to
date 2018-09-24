@@ -10,7 +10,7 @@ function route(matcher, ...fns) {
 
 function methodRoute(method) {
   return function(...args) {
-    const isMethod = req => req.method === method;
+    const isMethod = req => (req.method || "").toUpperCase() === method;
     return Object.assign({}, route(...args), { isMethod });
   };
 }
