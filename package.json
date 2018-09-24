@@ -1,13 +1,13 @@
 {
   "name": "route-to",
-  "version": "0.0.0-alpha.9",
+  "version": "0.0.0-alpha.10",
   "description": "Fast and simple http router",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon examples/basic",
-    "sls:get": "serverless invoke local --function api --data '{\\\"path\\\": \\\"/\\\", \\\"method\\\": \\\"get\\\"}'",
-    "sls:post": "serverless invoke local --function api --data '{\"path\": \"/\", \"method\": \"post\"}'"
+    "sls:get": "serverless invoke local --function api --data '{\\\"path\\\": \\\"/\\\", \\\"httpMethod\\\": \\\"get\\\"}'",
+    "sls:post": "serverless invoke local --function api --data '{\"path\": \"/\", \"httpMethod\": \"post\"}'"
   },
   "repository": {
     "type": "git",
